@@ -1,0 +1,35 @@
+{
+  "lang": "pt-BR",
+  "types": {
+    "feat": "feat: novos recursos percebidos pelo usuário",
+    "build": "build: mudanças que afetam o sistema de compilação ou dependências externas (exemplos de escopo: gulp, broccoli, npm)",
+    "deps": "deps: adicionar ou atualizar dependências, remover dependências",
+    "docs": "docs: documentação apenas alterações ou inclusões",
+    "chore": "chore: execução de tarefas",
+    "fix": true,
+    "ci": true,
+    "style": true,
+    "refactor": true,
+    "test": true,
+    "perf": false,
+    "temp": false
+  },
+  "min-len": 10,
+  "max-len": 200,
+  "example": "chore: execução de tarefas",
+  "scopeDescriptions": [
+    "Opcionalmente, pode ser qualquer coisa que especifique a localização da alteração de confirmação.",
+    "Por exemplo, $ location, $ browser, $ compile, $ rootScope, ngHref, ngClick, ngView.",
+    "No desenvolvimento de aplicativos, um escopo é uma página, módulo ou componente."
+  ],
+  "invalidScopeDescriptions": [
+    "`scope` é opcional, mas não pode estar vazio se houver parênteses."
+  ],
+  "subjectDescriptions": ["Uma breve descrição das mudanças em uma linha."],
+  "invalidSubjectDescriptions": [
+    "Não coloque a primeira letra em maiúscula",
+    "Sem ponto '.' No final"
+  ],
+  "showInvalidHeader": false,
+  "debug": false
+}
