@@ -1,5 +1,5 @@
 import { ILoadFacebookUserApi } from '@/data/contracts/apis'
-import { ISaveFacebookAccountRepository, ILoadUserAccountRepository } from '@/data/contracts/repos'
+import { ILoadUserAccountRepository, ISaveFacebookAccountRepository } from '@/data/contracts/repos'
 import { FacebookAuthenticationService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
 
