@@ -26,7 +26,7 @@ describe('FacebookAuthenticationService', () => {
     })
     userAccountRepo = mock()
     userAccountRepo.load.mockResolvedValue(undefined)
-    userAccountRepo.saveWithFacebook.mockResolvedValueOnce({ id: 'any_account_id' })
+    userAccountRepo.saveWithFacebook.mockResolvedValue({ id: 'any_account_id' })
     crypto = mock()
     crypto.generateToken.mockResolvedValue('any_generated_token')
     sut = new FacebookAuthenticationService(
@@ -63,8 +63,8 @@ describe('FacebookAuthenticationService', () => {
 
   // should call SaveFacebookAccountRepository with FacebookAccoun
   it('deve chamar SaveFacebookAccountRepository com FacebookAccoun', async () => {
-    const FacebookAccounStub = jest.fn().mockImplementation(() => ({ any: 'any' }))
-    mocked(FacebookAccount).mockImplementation(FacebookAccounStub)
+    const FacebookAccountStub = jest.fn().mockImplementation(() => ({ any: 'any' }))
+    mocked(FacebookAccount).mockImplementation(FacebookAccountStub)
 
     await sut.perform({ token })
 
@@ -88,5 +88,41 @@ describe('FacebookAuthenticationService', () => {
     const authResult = await sut.perform({ token })
 
     expect(authResult).toEqual(new AccessToken('any_generated_token'))
+  })
+
+  // should rethrow if ILoadFacebookUserApi throws
+  it('deve relançar se ILoadFacebookUserApi lançar repassar', async () => {
+    facebookApi.loadUser.mockRejectedValueOnce(new Error('fb_error'))
+
+    const promise = sut.perform({ token })
+
+    await expect(promise).rejects.toThrow(new Error('fb_error'))
+  })
+
+  // should rethrow if ILoadUserAccountRepository throws
+  it('deve relançar se ILoadUserAccountRepository lançar repassar', async () => {
+    userAccountRepo.load.mockRejectedValueOnce(new Error('load_error'))
+
+    const promise = sut.perform({ token })
+
+    await expect(promise).rejects.toThrow(new Error('load_error'))
+  })
+
+  // should rethrow if ISaveFacebookAccountRepository throws
+  it('deve relançar se ISaveFacebookAccountRepository lançar repassar', async () => {
+    userAccountRepo.saveWithFacebook.mockRejectedValueOnce(new Error('save_error'))
+
+    const promise = sut.perform({ token })
+
+    await expect(promise).rejects.toThrow(new Error('save_error'))
+  })
+
+  // should rethrow if ITokenGenerator throws
+  it('deve relançar se ITokenGenerator lançar repassar', async () => {
+    crypto.generateToken.mockRejectedValueOnce(new Error('token_error'))
+
+    const promise = sut.perform({ token })
+
+    await expect(promise).rejects.toThrow(new Error('token_error'))
   })
 })
