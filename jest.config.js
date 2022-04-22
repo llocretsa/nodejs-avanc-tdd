@@ -19,5 +19,6 @@ module.exports = {
   testEnvironment: "jest-environment-node",
   transform: {
     '\\.ts$': 'ts-jest'
-  }
+  },
+  clearMocks: true
 }
