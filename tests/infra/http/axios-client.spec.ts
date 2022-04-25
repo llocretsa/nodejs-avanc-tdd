@@ -34,7 +34,6 @@ describe('AxiosHttpClient', () => {
   describe('GET', () => {
     // should call get with correct params
     it('deve chamar get com parâmetros corretos', async () => {
-
       await sut.get({ url, params })
 
       expect(fakeAxios.get).toHaveBeenCalledWith(url, { params })
@@ -43,10 +42,18 @@ describe('AxiosHttpClient', () => {
 
     // should return data on sucess
     it('deve retornar dados com sucesso', async () => {
-
       const result = await sut.get({ url, params })
 
       expect(result).toEqual('any_data')
+    })
+
+    // should rethrows if get throws
+    it('deve relançar se receber erro', async () => {
+      fakeAxios.get.mockRejectedValueOnce(new Error('http_error'))
+
+      const promise = sut.get({ url, params })
+
+      await expect(promise).rejects.toThrow(new Error('http_error'))
     })
   })
 })
