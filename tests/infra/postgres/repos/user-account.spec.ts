@@ -37,8 +37,6 @@ describe('PgUserAccountRepository', () => {
 
     // should return undefined if email does not exists
     it('deve retornar undefined se o email não existir', async () => {
-      const sut = new PgUserAccountRepository()
-
       const account = await sut.load({ email: 'any_email' })
 
       expect(account).toBeUndefined()
